@@ -34,10 +34,29 @@ class MemoController extends Controller
         return redirect(route('memos.index'));
     }
 
-    //紹介ページ
+    //照会ページ
     public function show($id)
     {
         $memo = Memo::find($id);
         return view('memos.show', ['memo' => $memo]);
+    }
+
+    //更新ページ
+    public function edit($id)
+    {
+        $memo = Memo::find($id);
+        return view('memos.edit', ['memo' => $memo]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $memo = Memo::find($id);
+        // 値の用意
+        $memo->title = $request->title;
+        $memo->body = $request->body;
+        // インスタンスに値を設定して保存
+        $memo->save();
+        // 登録したらindexに戻る
+        return redirect(route('memos.index'));
     }
 }
